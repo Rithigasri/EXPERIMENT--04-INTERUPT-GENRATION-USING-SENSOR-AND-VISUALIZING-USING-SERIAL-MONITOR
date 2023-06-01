@@ -1,13 +1,13 @@
-# EXPERIMENT--04-INTERUPT-GENRATION-USING-SENSOR-AND-VISUALIZING-USING-SERIAL-MONITOR
+# EXPERIMENT:04 INTERRUPT GENRATION USING SENSOR AND VISUALIZING USING SERIAL MONITOR
 
-### Aim:
+## AIM:
 To Interface a IR Sensor to digital port of iot development board  and generate an interrupt and visualize on the serial monitor 
 
-### Components required:
-STM32 CUBE IDE,  serial port utility monitor .
+## COMPONENT'S REQUIRED:
+* STM32 CUBE IDE.
+* Serial port utility monitor .
 
-
-## Theory :
+## THEORY:
 
 An infrared (IR) sensor a proximity sensor, or a ‘nearness’ sensor senses whether there is an object near it or not. The IR stands for Infrared sensor. Infrared is the light out of our visible spectrum.
 
@@ -49,77 +49,123 @@ The STM32 ARM microcontroller features 23 event sources which are divided into t
 
 
 The diagram below shows how the GPIO pins are connected to the 16 interrupt lines:
-## Procedure:
- 1. click on STM 32 CUBE IDE, the following screen will appear 
+## PROCEDURE:
+ 1. click on STM 32 CUBE IDE, the following screen will appear   
  ![image](https://user-images.githubusercontent.com/36288975/226189166-ac10578c-c059-40e7-8b80-9f84f64bf088.png)
 
- 2. click on FILE, click on new stm 32 project 
+ 2. click on FILE, click on new stm 32 project   
  ![image](https://user-images.githubusercontent.com/36288975/226189215-2d13ebfb-507f-44fc-b772-02232e97c0e3.png)
 ![image](https://user-images.githubusercontent.com/36288975/226189230-bf2d90dd-9695-4aaf-b2a6-6d66454e81fc.png)
-3. select the target to be programmed  as shown below and click on next 
+3. select the target to be programmed  as shown below and click on next   
 
 ![image](https://user-images.githubusercontent.com/36288975/226189280-ed5dcf1d-dd8d-43ae-815d-491085f4863b.png)
 
-4.select the program name 
+4.select the program name   
 ![image](https://user-images.githubusercontent.com/36288975/226189316-09832a30-4d1a-4d4f-b8ad-2dc28f137711.png)
 
 
-5. corresponding ioc file will be generated automatically 
+5. corresponding ioc file will be generated automatically   
 ![image](https://user-images.githubusercontent.com/36288975/226189378-3abbdee2-0df6-470f-a3cd-79c74e3d3ad8.png)
 
-6.select the appropriate pins as gipo, in or out, USART or required options and configure 
+6.select the appropriate pins as gipo, in or out, USART or required options and configure   
 ![image](https://user-images.githubusercontent.com/36288975/226189403-f7179f1a-3eae-4637-826b-ab4ec35ba1e1.png)
 ![image](https://user-images.githubusercontent.com/36288975/226189425-2b2414ce-49b3-4b61-a260-c658cb2e4152.png)
 
 
-7.click on cntrl+S , automaticall C program will be generated 
+7.click on cntrl+S , automaticall C program will be generated   
 ![image](https://user-images.githubusercontent.com/36288975/226189443-8b43451d-0b14-47e4-a20b-cc09c6ad8458.png)
 ![image](https://user-images.githubusercontent.com/36288975/226189450-85ffa969-2ffb-4788-81e5-72d60fdda0f1.png)
-8. edit the program and as per required 
+8. edit the program and as per required   
 ![image](https://user-images.githubusercontent.com/36288975/226189461-a573e62f-a109-4631-a250-a20925758fe0.png)
 
-9. use project and build all 
+9. use project and build all   
 ![image](https://user-images.githubusercontent.com/36288975/226189554-3f7101ac-3f41-48fc-abc7-480bd6218dec.png)
-10. once the project is bulild 
+10. once the project is bulild   
 ![image](https://user-images.githubusercontent.com/36288975/226189577-c61cc1eb-3990-4968-8aa6-aefffc766b70.png)
 
-11. click on debug option 
+11. click on debug option   
 ![image](https://user-images.githubusercontent.com/36288975/226189625-37daa9a3-62e9-42b5-a5ce-2ac63345905b.png)
 
-12. connect the  iot board to power supply and usb 
+12. connect the  iot board to power supply and usb   
 
-13. After connecting open the STM cube programmer 
+13. After connecting open the STM cube programmer   
 ![image](https://user-images.githubusercontent.com/36288975/227599356-9c465b7e-6bd0-436b-b4e8-742ed25e06ce.png)
 
-14. click on UART and click on connect 
+14. click on UART and click on connect   
 ![image](https://user-images.githubusercontent.com/36288975/227599458-26976d4a-f2d4-49f0-a49f-31f46eb15761.png)
 
-15. once it is connected , click on Erasing and programming option 
+15. once it is connected , click on Erasing and programming option   
 ![image](https://user-images.githubusercontent.com/36288975/227599531-f03d277e-440f-4f8a-8875-97f8e8058c71.png)
 
-16. flash the bin or hex file as shown below by switching the switch to flash mode 
+16. flash the bin or hex file as shown below by switching the switch to flash mode   
 
 ![image](https://user-images.githubusercontent.com/36288975/227599656-dc4a635f-b5f1-44c8-84c5-ee0a592fa184.png)
 
 
-17. check for execution of the output by switching the board to run mode 
-18. click on the serial port utility 
+17. check for execution of the output by switching the board to run mode   
+18. click on the serial port utility   
 ![image](https://github.com/vasanthkumarch/EXPERIMENT--04-INTERUPT-GENRATION-USING-SENSOR-AND-VISUALIZING-USING-SERIAL-MONITOR/assets/36288975/cd2c17fc-afac-4d72-97f9-20db3e63f23f)
-19. click on the run to observe the values 
+19. click on the run to observe the values   
 
 
   
 
-## STM 32 CUBE PROGRAM :
+## STM32 CUBE PROGRAM :
+```
+#include "main.h"
+#include "stdio.h"
+void HAL_GPIO_EXTI_Callback(uint16_t);
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_USART2_UART_Init(void);
+
+#if defined(__ICCARM__) || defined (__ARMCC__VERSION)
+#define PUTCHAR_PROTOYPE int fputc(int ch,FILE *f)
+#elif defined(__GNUC__)
+#define PUTCHAR_PROTOTYPE int __io__putchar(int ch)
+#endif
+
+int main(void)
+{
+  HAL_Init();
+  SystemClock_Config();
+  MX_GPIO_Init();
+  MX_USART2_UART_Init();
+  while (1)
+  {
+	  HAL_GPIO_EXTI_Callback (GPIO_PIN_4);
+	  HAL_Delay(1000);
+  }
+}
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4)==0)
+{
+	 printf("IR ON\n");
+}
+else
+{
+	 printf("IR Off\n");
+}
+}
+
+PUTCHAR_PROTOTYPE
+{
+	HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+	return ch;
+}
+```
+
+## OUTPUT SCREENSHOTS OF SERIAL PORT UTILITY:
+ ![image](https://github.com/Rithigasri/EXPERIMENT--04-INTERUPT-GENRATION-USING-SENSOR-AND-VISUALIZING-USING-SERIAL-MONITOR/assets/93427256/50c33a7e-9b33-473e-9fd4-dd774309da4f)
+
+## CIRCUIT BOARD:
+### BEFORE DETECTION OF OBSTACLE:
+![WhatsApp Image 2023-03-25 at 10 56 03 AM](https://github.com/Rithigasri/EXPERIMENT--04-INTERUPT-GENRATION-USING-SENSOR-AND-VISUALIZING-USING-SERIAL-MONITOR/assets/93427256/8f69a84c-8c11-4ef9-ad53-4e82956306db)
+
+### AFTER DETECTION OF OBSTACLE:
+![WhatsApp Image 2023-03-25 at 10 56 03 AM (1)](https://github.com/Rithigasri/EXPERIMENT--04-INTERUPT-GENRATION-USING-SENSOR-AND-VISUALIZING-USING-SERIAL-MONITOR/assets/93427256/6c76338f-3315-4171-9919-90b44c0e4444)
 
 
-
-## Output screen shots of serial port utility   :
- 
- 
- ## Circuit board :
- 
- 
- 
-## Result :
+## RESULT:
 Interfacing a  IR SENSOR and interrupt is generated using external interrupt mode , visualized on serial port 
